@@ -1,7 +1,14 @@
 version: 2
 updates:
-  - package-ecosystem: bun
-    directory: /
+  - package-ecosystem: npm
+    directories:
+      - /
+      - /cli
+      - /desktop
+      - /web
+      - /inference
+      - /integrations/pi
+      - /packages/*
     schedule:
       interval: weekly
     open-pull-requests-limit: 10
@@ -15,6 +22,13 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 10
+  - package-ecosystem: pip
+    directories:
+      - /packages/inference-benchmark/engines/mlx-lm
+      - /packages/inference-benchmark/engines/mlx-vlm
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
   - package-ecosystem: github-actions
     directory: /
     schedule:
