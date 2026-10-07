@@ -88,34 +88,40 @@ compilePatchMap(NonExactOption)
 
 // 11. Schema.optional (bare)
 const BareOptional = Schema.Struct({ a: Schema.String, b: Schema.optional(Schema.Number) })
-compilePatchMap(BareOptional) // ERROR
+// @ts-expect-error intentional rejection case
+compilePatchMap(BareOptional)
 
 // 12. Schema.UndefinedOr
 const UndefOr = Schema.Struct({ a: Schema.String, b: Schema.UndefinedOr(Schema.Number) })
-compilePatchMap(UndefOr) // ERROR
+// @ts-expect-error intentional rejection case
+compilePatchMap(UndefOr)
 
 // 13. Nested bare optional
 const NestedBare = Schema.Struct({
   a: Schema.String,
   inner: Schema.Struct({ x: Schema.optional(Schema.String) }),
 })
-compilePatchMap(NestedBare) // ERROR
+// @ts-expect-error intentional rejection case
+compilePatchMap(NestedBare)
 
 // 14. Array of unsafe structs
 const UnsafeArray = Schema.Struct({
   items: Schema.Array(Schema.Struct({ x: Schema.optional(Schema.String) })),
 })
-compilePatchMap(UnsafeArray) // ERROR
+// @ts-expect-error intentional rejection case
+compilePatchMap(UnsafeArray)
 
 // 15. Union with bare optional member
 const UnsafeUnion = Schema.Union(
   Schema.Struct({ type: Schema.Literal('a'), x: Schema.String }),
   Schema.Struct({ type: Schema.Literal('b'), y: Schema.optional(Schema.String) }),
 )
-compilePatchMap(UnsafeUnion) // ERROR
+// @ts-expect-error intentional rejection case
+compilePatchMap(UnsafeUnion)
 
 // 16. define() with bare optional
-define({ state: BareOptional, initial: { a: '' } }) // ERROR
+// @ts-expect-error intentional rejection case
+define({ state: BareOptional, initial: { a: '' } })
 
 // 17. Atif-like schema (mimicking production pattern)
 const AtifLike = Schema.Struct({
@@ -124,4 +130,5 @@ const AtifLike = Schema.Struct({
   session_id: Schema.optional(Schema.String),
   extra: Schema.optional(Schema.Record({ key: Schema.String, value: Schema.String })),
 })
-compilePatchMap(AtifLike) // ERROR
+// @ts-expect-error intentional rejection case
+compilePatchMap(AtifLike)

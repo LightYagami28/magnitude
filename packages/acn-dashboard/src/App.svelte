@@ -564,7 +564,7 @@
         </div>
         <div class="metric">
           <span>last command</span>
-          <strong>{formatTime(selectedIntrospection?.activity.lastCommandAt)}</strong>
+          <strong>{formatTime(selectedIntrospection?.session.updatedAt ?? null)}</strong>
         </div>
         <div class="metric">
           <span>tokens</span>

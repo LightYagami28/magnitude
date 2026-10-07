@@ -1,4 +1,10 @@
-import type { AcnRegistration } from '@magnitudedev/acn-protocol'
+export interface AcnRegistration {
+  readonly id: string
+  readonly version: string
+  readonly url: string
+  readonly pid: number
+  readonly timestamp: number
+}
 
 export type {
   AcnDisplayViewIntrospection,

@@ -1,19 +1,14 @@
 import { readdir, readFile, rm } from 'node:fs/promises'
 import { dirname, join, resolve } from 'node:path'
 import { homedir } from 'node:os'
-import { Schema } from 'effect'
-import {
-  AcnVersionRegistryJson,
-  type AcnRegistration,
-} from '@magnitudedev/acn-protocol'
-import type { AcnInfo, KillAllAcnResult, RpcTraceSummary } from './lib/types'
+import type { AcnInfo, AcnRegistration, KillAllAcnResult, RpcTraceSummary } from './lib/types'
 
 const PORT = Number(process.env.ACN_DASH_API_PORT ?? 4886)
 const MOTEL_URL = process.env.MAGNITUDE_MOTEL_URL ?? 'http://127.0.0.1:27686'
 const DATA_DIR = join(homedir(), '.magnitude')
 const ACN_DIR = join(DATA_DIR, 'acn')
 const DIST_DIR = join(import.meta.dir, '..', 'dist')
-const decodeRegistry = Schema.decodeUnknownSync(AcnVersionRegistryJson)
+type RegistryDocument = { readonly registration?: AcnRegistration | null }
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -35,7 +30,10 @@ async function readRegistration(path: string): Promise<AcnRegistration | null> {
   try {
     const text = await readFile(path, 'utf8')
     if (text.trim().length === 0) return null
-    return decodeRegistry(text).registration
+    const document = JSON.parse(text) as RegistryDocument
+    const registration = document.registration
+    if (!registration || typeof registration.url !== 'string' || typeof registration.version !== 'string') return null
+    return registration
   } catch {
     return null
   }
