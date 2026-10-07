@@ -47,7 +47,7 @@
     "pre:alpha": "changeset pre enter alpha",
     "pre:beta": "changeset pre enter beta",
     "pre:exit": "changeset pre exit",
-    "prepare": "bun run packages/version/scripts/generate-version.ts && effect-language-service patch",
+    "prepare": "bun run packages/version/scripts/generate-version.ts",
     "els": "effect-language-service",
     "web": "bun run dev:version && bun run web/scripts/dev-server.ts",
     "desktop:setup": "bun run --cwd desktop setup",
@@ -79,22 +79,25 @@
     "icn:catalog:build-bundle": "cargo run --manifest-path inference/Cargo.toml -p icn-catalog -- build-bundle --output inference/target/catalog-inputs/model-planner-inputs.bundle --model-store ~/.magnitude/models --cache-root ~/.magnitude/cache"
   },
   "devDependencies": {
-    "@changesets/changelog-github": "^0.6.0",
-    "@changesets/cli": "^2.30.0",
-    "@effect/language-service": "^0.84.1",
-    "@effect/opentelemetry": "0.63.0",
+    "@changesets/changelog-github": "^1.0.1",
+    "@changesets/cli": "^3.0.3",
+    "@effect/language-service": "^0.87.4",
+    "@effect/opentelemetry": "4.0.2",
     "@eslint/js": "^10.0.1",
-    "@opentelemetry/exporter-trace-otlp-http": "0.219.0",
-    "@types/bun": "1.3.14",
+    "@opentelemetry/exporter-trace-otlp-http": "0.223.0",
+    "@types/bun": "1.4.2",
     "@types/mdast": "^4.0.4",
-    "eslint": "^10.6.0",
-    "turbo": "^2.5.4",
-    "typescript": "^5.8.3",
-    "typescript-eslint": "^8.62.1"
+    "@typescript/native": "npm:typescript@7",
+    "eslint": "10.12.0",
+    "turbo": "2.11.7",
+    "typescript": "~6",
+    "typescript-eslint": "8.71.1",
+    "vite": "^8.3.3",
+    "vitest": "^5.0.3"
   },
   "dependencies": {
-    "beautiful-mermaid": "^0.1.3",
-    "mdast-util-from-markdown": "^2.0.3",
+    "beautiful-mermaid": "^1.1.3",
+    "mdast-util-from-markdown": "2.1.0",
     "remark": "^15.0.1",
     "remark-gfm": "^4.0.1",
     "remark-parse": "^11.0.0",
@@ -110,8 +113,6 @@
     "sqlite3"
   ],
   "patchedDependencies": {
-    "just-git@1.7.0": "patches/just-git@1.7.0.patch",
-    "@changesets/assemble-release-plan@6.0.10": "patches/@changesets%2Fassemble-release-plan@6.0.10.patch",
     "@effect-atom/atom@0.5.3": "patches/@effect-atom%2Fatom@0.5.3.patch"
   }
 }

@@ -1,6 +1,5 @@
 import { describe, expect, it } from "vitest"
 import { Option, Schema } from "effect"
-import releasePlan from "../../release-plan.json"
 import { ReleaseManifestSchema } from "@magnitudedev/release"
 import type { ReleaseArtifact, ReleaseManifest } from "@magnitudedev/release"
 import { selectCudaArtifact } from "./cuda-compatibility"
@@ -40,8 +39,8 @@ const manifest = (artifacts: readonly ReleaseArtifact[]): ReleaseManifest => ({
   schemaVersion: 2,
   version: "1.0.0",
   acnRevision: 0,
-  rpc: releasePlan.rpc,
-  plugins: Schema.decodeUnknownSync(ReleaseManifestSchema.fields.plugins)(releasePlan.plugins.map(plugin => plugin.artifact)),
+  rpc: { version: 1, fingerprint: sha },
+  plugins: Schema.decodeUnknownSync(ReleaseManifestSchema.fields.plugins)([]),
   tag: "@magnitudedev/cli@1.0.0",
   sourceCommit: "b".repeat(40),
   artifacts: artifacts as [ReleaseArtifact, ...ReleaseArtifact[]],
