@@ -81,13 +81,17 @@ export const sourceInventory = Effect.fn("sourceInventory")(function* (
         followSymlinks: false,
         onlyFiles: true,
       })) {
-        const segments = path.split("/");
+        const normalizedPath = path.replaceAll("\\", "/");
+        const segments = normalizedPath.split("/");
         // The contract excludes directory base names, not a regular file that
         // happens to share one of those names. This matches the Rust verifier.
         if (segments.slice(0, -1).some((segment) => excluded.has(segment))) {
           continue;
         }
-        collected.push(path);
+        // Bun returns platform-native separators on Windows. Inventory paths
+        // are part of a cross-platform hash contract, so canonicalize them
+        // before sorting, hashing, and handing them to the Rust verifier.
+        collected.push(normalizedPath);
       }
       return collected.sort((left, right) =>
         Buffer.compare(Buffer.from(left, "utf8"), Buffer.from(right, "utf8"))

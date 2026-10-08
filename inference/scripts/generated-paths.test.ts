@@ -16,9 +16,9 @@ describe("generated parity path policy", () => {
   });
 
   test("the results directory admits only policy documentation", async () => {
-    const ignore = await Bun.file(
+    const ignore = (await Bun.file(
       resolve(import.meta.dirname, "../results/.gitignore")
-    ).text();
+    ).text()).replaceAll("\r\n", "\n");
     expect(ignore.split("\n")).toEqual(
       expect.arrayContaining(["*", "!.gitignore", "!README.md"])
     );
